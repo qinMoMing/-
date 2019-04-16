@@ -1,0 +1,26 @@
+import { IConfig } from 'umi-types';
+
+// ref: https://umijs.org/config/
+const config: IConfig =  {
+  treeShaking: true,
+  plugins: [
+    // ref: https://umijs.org/plugin/umi-plugin-react.html
+    ['umi-plugin-react', {
+      dva: {
+        immer: true,
+      },
+      antd: true,
+      dynamicImport: false,
+      title: 'b',
+      dll: false,
+      
+      routes: {
+        exclude: [
+          /components\//,
+        ],
+      },
+    }],
+  ],
+}
+
+export default config;
