@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './index.css';
 
 import { Layout, Menu, Breadcrumb, Input,  List, Avatar, Icon} from 'antd';
+import MyHeader from "../components/MyHeader";
 
 const listData = [];
 for (let i = 0; i < 23; i++) {
@@ -32,29 +33,8 @@ export default class Home extends React.Component {
   render() {
     return (
       <Layout>
-        <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-          <div className="logo" />
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={['2']}
-            style={{ lineHeight: '64px'}}
-          >
-            <Menu.Item key="1" className={styles.menuItem}>首页</Menu.Item>
-            <Menu.Item key="2" className={styles.menuItem}>捐款</Menu.Item>
-            <Menu.Item key="3" className={styles.menuItem}>捐物</Menu.Item>
-            <Menu.Item key="4" className={styles.menuItem}>爱心服务</Menu.Item>
-            <Menu.Item key="5" className={styles.menuItem}>爱心机构</Menu.Item>
-            <Menu.Item key="6" className={styles.menuItem}>爱心宣传</Menu.Item>
-            <Menu.Item key="7" className={styles.menuItem}>发起项目</Menu.Item>
-            <Menu.Item key="8" className={styles.menuItem}>{this.state.login ? "个人中心" : ("登录 | 注册")}</Menu.Item>
-            <Search
-              placeholder="input search text"
-              onSearch={value => console.log(value)}
-              style={{ width: 200, marginLeft: "80px",}}
-            />
-          </Menu>
-        </Header>
+        <MyHeader login={false}  keyPath={['1']}/>
+
         <Content style={{ padding: '0 50px', marginTop: 64 }}>
           {/* <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>

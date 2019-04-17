@@ -1,0 +1,13 @@
+
+.normal {
+  background: #BC79F2;
+}
+.wrap{
+  background: #e5e5e5;
+  padding: 30px;
+  margin-top: 100px;
+}
+.Card:hover{
+  cursor: pointer;
+  background: #f5f5f5;
+}
