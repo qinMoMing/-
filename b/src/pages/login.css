@@ -1,0 +1,16 @@
+
+.normal {
+  background: #F2F079;
+}
+.wrapForm {
+  max-width: 300px;
+  position: absolute;
+  left: 30%;
+  top: 30%;
+}
+.loginFormForgot {
+  float: right;
+}
+.loginFormButton {
+  width: 100%;
+}

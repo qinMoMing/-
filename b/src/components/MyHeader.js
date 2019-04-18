@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './myHeader.css';
+import styles from './MyHeader.css';
 import router from 'umi/router';
 import { Layout, Menu, Input} from 'antd';
 const R = ['','','','','','','','./launch/launch'];
