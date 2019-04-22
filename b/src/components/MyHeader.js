@@ -2,19 +2,19 @@ import React from 'react';
 import styles from './MyHeader.css';
 import router from 'umi/router';
 import { Layout, Menu, Input} from 'antd';
-const R = ['','','','','','','','./launch/launch'];
+const R = ['','','','','','','','/launch/launch',"/login"];
 const { Header} = Layout;
 const Search = Input.Search;
 export default class MyHeader extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      login : props.login,
       keyPath : props.keyPath,
     }
 
   }
   render() {
+    const login = sessionStorage.getItem("login");
     return (
         <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
             <div className="logo" />
@@ -37,7 +37,7 @@ export default class MyHeader extends React.Component {
             <Menu.Item key="5" className={styles.menuItem}>爱心机构</Menu.Item>
             <Menu.Item key="6" className={styles.menuItem}>爱心宣传</Menu.Item>
             <Menu.Item key="7" className={styles.menuItem}>发起项目</Menu.Item>
-            <Menu.Item key="8" className={styles.menuItem}>{this.state.login ? "个人中心" : ("登录 | 注册")}</Menu.Item>
+            <Menu.Item key="8" className={styles.menuItem}>{login ? "个人中心" : ("登录 | 注册")}</Menu.Item>
             <Search
                 placeholder="input search text"
                 onSearch={value => console.log(value)}

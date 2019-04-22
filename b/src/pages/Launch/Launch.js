@@ -6,7 +6,7 @@ import MyHeader from "../../components/MyHeader";
 import Link from 'umi/link';
 import {
   Form, Select, InputNumber, Switch, Radio, Input,
-  Slider, Button, Upload, Icon, Rate, Checkbox,
+  Slider, Button, Upload, Icon, Rate, Checkbox, Modal,
   Row, Col, Card, Layout, DatePicker,
 } from 'antd';
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
@@ -44,27 +44,32 @@ class MyFrom extends React.Component {
     return (
       <Layout>
         <MyHeader login={false} keyPath={['7']}/>
-        <div className={styles.wrap}>
-          <Row gutter={24}>
-            <Col span={8}>
-              <Card title="资金求助" 
-                className={styles.Card}
-                bordered={false} 
-                headStyle={{textAlign:"center"}} 
-                bodyStyle={{textAlign:"center"}}
-              >
-                金钱类型爱心项目的发起
-              </Card>
-            </Col>
-            <Col span={8}>
-              <Card title="物资求助" className={styles.Card} bordered={false} headStyle={{textAlign:"center"}} bodyStyle={{textAlign:"center"}}>物品类型爱心项目的发起</Card>
-            </Col>
-            <Col span={8}>
-              <Card title="服务求助" className={styles.Card} bordered={false} headStyle={{textAlign:"center"}} bodyStyle={{textAlign:"center"}}>服务类型爱心项目的发起</Card>
-            </Col>
-          </Row>
-        </div>
-        <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Modal
+          visible={false}
+        >
+          <div className={styles.wrap}>
+            <Row gutter={24}>
+              <Col span={8}>
+                <Card title="资金求助" 
+                  className={styles.Card}
+                  bordered={false} 
+                  headStyle={{textAlign:"center"}} 
+                  bodyStyle={{textAlign:"center"}}
+                >
+                  金钱类型爱心项目的发起
+                </Card>
+              </Col>
+              <Col span={8}>
+                <Card title="物资求助" className={styles.Card} bordered={false} headStyle={{textAlign:"center"}} bodyStyle={{textAlign:"center"}}>物品类型爱心项目的发起</Card>
+              </Col>
+              <Col span={8}>
+                <Card title="服务求助" className={styles.Card} bordered={false} headStyle={{textAlign:"center"}} bodyStyle={{textAlign:"center"}}>服务类型爱心项目的发起</Card>
+              </Col>
+            </Row>
+          </div>
+        </Modal>
+        
+        <Form {...formItemLayout} onSubmit={this.handleSubmit} style={{padding:'140px'}}>
           <Form.Item
             label="受助人姓名"
           >
@@ -245,7 +250,7 @@ class MyFrom extends React.Component {
           <Form.Item
             wrapperCol={{ span: 12, offset: 6 }}
             >
-            <Button type="primary" htmlType="submit">Submit</Button>
+            <Button type="primary" htmlType="submit">发起项目</Button>
           </Form.Item>
         </Form>
       </Layout>
@@ -254,18 +259,6 @@ class MyFrom extends React.Component {
 }
 export default MyFrom;
 {/*
-import { Input } from 'antd';
-
-const { TextArea } = Input;
-
-ReactDOM.render(
-  <div>
-    <TextArea placeholder="Autosize height based on content lines" autosize />
-    <div style={{ margin: '24px 0' }} />
-    <TextArea placeholder="Autosize height with minimum and maximum number of lines" autosize={{ minRows: 2, maxRows: 6 }} />
-  </div>,
-  mountNode
-);
 */}
     
 

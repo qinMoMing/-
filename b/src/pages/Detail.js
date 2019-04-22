@@ -1,6 +1,7 @@
-import React from 'react';
-import styles from './index.css';
 
+import React from 'react';
+
+import styles from './Detail.css';
 import { Layout, Menu, Breadcrumb, Input,  List, Avatar, Icon} from 'antd';
 import MyHeader from "../components/MyHeader";
 
@@ -28,6 +29,7 @@ export default class Home extends React.Component {
     this.state = {
       login : false,
     }
+
   }
   render() {
     return (
