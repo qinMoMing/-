@@ -5,10 +5,11 @@ import styles from './Login.css';
 
 import {
   Form, Icon, Card, Input, Select, Row, Col, Checkbox, Button, AutoComplete, 
-  Menu, 
+  Menu, List, Modal, DatePicker,
 } from 'antd';
 import MyHeader from "../components/MyHeader";
 const { Option } = Select;
+const Search = Input.Search;
 const AutoCompleteOption = AutoComplete.Option;
 
 const residences = [{
@@ -34,14 +35,16 @@ const residences = [{
     }],
   }],
 }];
-
+const data = [{time:'2019-01-24',content:"'筹款上学'捐赠20元",num:20},{time:'2019-01-24',content:"'筹款上学'捐赠20元",num:20},{time:'2019-01-24',content:"'筹款上学'捐赠20元",num:20},{time:'2019-01-24',content:"'筹款上学'捐赠20元",num:20}]
 @Form.create({})
 class Login extends React.Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
-    registerV:false,
-    loginV:true,
+    registerV: false,
+    loginV: true,
+    showLoveModal: false,
+    confirmLoading: false,
   };
 
   handleConfirmBlur = (e) => {
@@ -278,6 +281,67 @@ class Login extends React.Component {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
+        sm: { span: 10 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 14 },
+      },
+    }; 
+    return(
+      <div style={{float:"left"}}>
+        <Form {...formItemLayout} onSubmit={this.handleSubmit} className={styles.wrapForm}>
+          <Form.Item
+            label="旧密码"
+          >
+            {getFieldDecorator('oldPassword', {
+              rules: [{
+                required: true, message: 'Please input your password!',
+              }, {
+                validator: this.validateToNextPassword,
+              }],
+            })(
+              <Input type="password" />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="输入新密码"
+          >
+            {getFieldDecorator('newPassword', {
+              rules: [{
+                required: true, message: 'Please input your password!',
+              }, {
+                validator: this.validateToNextPassword,
+              }],
+            })(
+              <Input type="password" />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="再次输入新密码"
+          >
+            {getFieldDecorator('confirm', {
+              rules: [{
+                required: true, message: 'Please confirm your password!',
+              }, {
+                validator: this.compareToFirstPassword,
+              }],
+            })(
+              <Input type="password" onBlur={this.handleConfirmBlur} />
+            )}
+          </Form.Item>
+          <Button type="primary" htmlType="submit" className={styles.loginFormButton}>
+            确认修改
+          </Button>
+        </Form>
+      </div>
+    )
+  }
+  renderPerson = () => {
+    const { getFieldDecorator } = this.props.form;
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
         sm: { span: 8 },
       },
       wrapperCol: {
@@ -286,73 +350,174 @@ class Login extends React.Component {
       },
     }; 
     return(
-      <Form {...formItemLayout} onSubmit={this.handleSubmit} className={styles.wrapForm}>
-        <Form.Item
-          label="旧密码"
-        >
-          {getFieldDecorator('oldPassword', {
-            rules: [{
-              required: true, message: 'Please input your password!',
-            }, {
-              validator: this.validateToNextPassword,
-            }],
-          })(
-            <Input type="password" />
-          )}
-        </Form.Item>
-        <Form.Item
-          label="输入新密码"
-        >
-          {getFieldDecorator('newPassword', {
-            rules: [{
-              required: true, message: 'Please input your password!',
-            }, {
-              validator: this.validateToNextPassword,
-            }],
-          })(
-            <Input type="password" />
-          )}
-        </Form.Item>
-        <Form.Item
-          label="再次输入新密码"
-        >
-          {getFieldDecorator('confirm', {
-            rules: [{
-              required: true, message: 'Please confirm your password!',
-            }, {
-              validator: this.compareToFirstPassword,
-            }],
-          })(
-            <Input type="password" onBlur={this.handleConfirmBlur} />
-          )}
-        </Form.Item>
-      </Form>
+      <div style={{float:"left"}}>
+        <Form {...formItemLayout} onSubmit={this.handleSubmit} style={{padding:100}}>
+          <Form.Item
+            label="真实姓名"
+          >
+            {getFieldDecorator('userName', {
+              rules: [{ required: true, message: 'Please input your username!' }],
+            })(
+              <Input placeholder="Username" />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="平台昵称"
+          >
+            {getFieldDecorator('userName', {
+              rules: [{ required: true, message: 'Please input your username!' }],
+            })(
+              <Input placeholder="Username" />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="出生日期"
+          >
+            {getFieldDecorator('beneficiary_birthday')(
+              <DatePicker onChange={this.onChange} />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="性别"
+          >
+            {getFieldDecorator('sex', {
+              rules: [
+                { required: true, message: 'Please select your country!' },
+              ],
+            })(
+              <Select>
+                <Option value="school">男</Option>
+                <Option value="hospital">女</Option>
+              </Select>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="身份证号"
+          >
+            {getFieldDecorator('beneficiary_idcard', {
+              rules: [{ required: true}],
+            })(
+              <Input placeholder="Username" />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="地址"
+          >
+            {getFieldDecorator('userName', {
+              rules: [{ required: true, message: 'Please input your username!' }],
+            })(
+              <Input placeholder="Username" />
+            )}
+          </Form.Item>
+          <Form.Item
+            label="联系方式"
+          >
+            {getFieldDecorator('userName', {
+              rules: [{ required: true, message: 'Please input your username!' }],
+            })(
+              <Input placeholder="Username" />
+            )}
+          </Form.Item>
+          <Form.Item
+            wrapperCol={{ span: 12, offset: 6 }}
+            >
+            <Button type="primary" htmlType="submit">保存</Button>
+          </Form.Item>
+        </Form>
+      </div>
     )
   }
   renderCenter = () => {
     return(
-      <div style={{width:"186px",padding:"64px 0"}}>
-        <Menu
-          defaultSelectedKeys={['1']}
-          mode="inline"
-          theme="dark"
+      <div>
+
+        <div style={{width:"186px",padding:"64px 0",float:"left"}}>
+          <Menu
+            defaultSelectedKeys={['1']}
+            mode="inline"
+            theme="dark"
+          >
+            <Menu.Item key="1">
+              <span>个人信息管理</span>
+            </Menu.Item>
+            <Menu.Item key="2">
+              <span>平台密码修改</span>
+            </Menu.Item>
+            <Menu.Item key="3">
+              <span>爱心币管理</span>
+            </Menu.Item>
+            <Menu.Item key="4">
+              <span>我发起项目的管理</span>
+            </Menu.Item>
+            <Menu.Item key="5">
+              <span>我参与项目的管理</span>
+            </Menu.Item>
+          </Menu>
+        </div>
+        {/* {this.renderLove()} */}
+        {/* {this.renderResetPassword()} */}
+        {this.renderPerson()}
+      </div>
+    )
+  }
+  showLoveModal = () => {
+    this.setState({
+      showLoveModal: true,
+    });
+  }
+  handleLoveCancel = () => {
+    console.log('Clicked cancel button');
+    this.setState({
+      showLoveModal: false,
+    });
+  }
+  handleLoveOk = () => {
+    this.setState({
+      confirmLoading: true,
+    });
+    setTimeout(() => {
+      this.setState({
+        visible: false,
+        confirmLoading: false,
+      });
+    }, 2000);
+  }
+  renderLove = () => {
+    return (
+      <div style={{float:"left",padding:"80px 10px"}}>
+        <div style={{padding:'0 20px 10px'}}>
+          <span>爱心币数额：</span>
+          <span style={{color:"red",padding:'0 20px'}}>80</span>
+          <Button type="primary" onClick={this.showLoveModal}>转赠</Button>
+        </div>
+        <List
+          size="small"
+          header={<div>收支明细</div>}
+          // footer={<div>Footer</div>}
+          bordered
+          dataSource={data}
+          renderItem={item => (
+            <List.Item>
+              <span style={{padding:'0 20px'}}>{item.time}</span>
+              <span style={{padding:'0 20px'}}>{item.content}</span>
+              <span style={{padding:'0 20px'}}>{item.num>0?`获得${item.num}`:`支出${-item.num}`}</span>
+            </List.Item>
+          )}
+        />
+        <Modal
+          title="转赠爱心币"
+          visible={this.state.showLoveModal}
+          onOk={this.handleLoveOk}
+          confirmLoading={this.state.confirmLoading}
+          onCancel={this.handleLoveCancel}
         >
-          <Menu.Item key="1">
-            <span>个人信息管理</span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <span>平台密码修改</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <span>爱心币管理</span>
-          </Menu.Item>
-          <Menu.Item key="4">
-            <span>我发起项目的管理</span>
-          </Menu.Item>
-          <Menu.Item key="5">
-            <span>我参与项目的管理</span>
-          </Menu.Item>
-        </Menu>
+          <Search
+            placeholder="输入对方的手机号"
+            enterButton="Search"
+            onSearch={value => console.log(value)}
+            style={{ width: 300 }}
+          />
+        </Modal>
       </div>
     )
   }
@@ -362,7 +527,9 @@ class Login extends React.Component {
       <div>
         <MyHeader login={false}  keyPath={['8']}/>
         
-        {login!="false" ? this.renderCenter() : (this.state.loginV ? this.renderLogin() : this.renderRegister())}
+        {login ? this.renderCenter() : (this.state.loginV ? this.renderLogin() : this.renderRegister())}
+        
+        <div style={{float:"left",padding:"80px 10px"}}></div>
       </div>
     );
   }
